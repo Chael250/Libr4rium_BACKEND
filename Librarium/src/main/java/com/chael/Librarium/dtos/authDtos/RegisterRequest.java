@@ -1,10 +1,10 @@
-package com.chael.Librarium.dtos.userDtos;
+package com.chael.Librarium.dtos.authDtos;
 
 import com.chael.Librarium.entities.enums.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public record CreateDto(
+public record RegisterRequest(
         @NotEmpty(message = "provide a fname")
         @NotNull
         String fname,

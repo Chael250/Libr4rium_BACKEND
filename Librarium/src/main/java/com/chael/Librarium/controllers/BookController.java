@@ -3,12 +3,12 @@ package com.chael.Librarium.controllers;
 import com.chael.Librarium.dtos.bookDtos.CreateDto;
 import com.chael.Librarium.dtos.bookDtos.PatchDto;
 import com.chael.Librarium.dtos.bookDtos.ResponseDto;
-import com.chael.Librarium.entities.Book;
 import com.chael.Librarium.entities.enums.BookGenre;
 import com.chael.Librarium.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +24,7 @@ public class BookController {
     }
 
     @PostMapping("/add-book")
+    @PreAuthorize("hasAuthority('librarian:create')")
     public ResponseEntity<ResponseDto> addBook(@Valid @RequestBody CreateDto newBook) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(newBook));
     }
@@ -58,7 +59,7 @@ public class BookController {
     }
 
     @PatchMapping("/patch-book/{id}")
-    public ResponseEntity<ResponseDto>  patchBook(
+    public ResponseEntity<ResponseDto> patchBook(
             @PathVariable UUID id,
             @Valid @RequestBody PatchDto patchDto
     ) {

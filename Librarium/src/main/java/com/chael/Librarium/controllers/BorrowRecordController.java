@@ -6,6 +6,7 @@ import com.chael.Librarium.services.BorrowRecordService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,11 +21,13 @@ public class BorrowRecordController {
     }
 
     @GetMapping("/get-borrow-records/{borrowerId}")
+    @PreAuthorize("hasAuthority('librarian:read')")
     public ResponseEntity<ResponseDto> getBorrowRecords(@PathVariable UUID borrowerId) {
         return ResponseEntity.status(HttpStatus.OK).body(borrowRecordService.getBorrowedRecordsByBorrower(borrowerId));
     }
 
     @PostMapping("/add-borrow-records/")
+    @PreAuthorize("hasAuthority('librarian:create')")
     public ResponseEntity<ResponseDto> addBorrowRecords(
             @Valid @RequestBody CreateDto newBorrowRecord
     ) {

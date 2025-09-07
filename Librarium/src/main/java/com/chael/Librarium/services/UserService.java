@@ -1,6 +1,5 @@
 package com.chael.Librarium.services;
 
-import com.chael.Librarium.dtos.userDtos.CreateDto;
 import com.chael.Librarium.dtos.userDtos.PatchDto;
 import com.chael.Librarium.dtos.userDtos.ResponseDto;
 import com.chael.Librarium.entities.User;
@@ -22,11 +21,6 @@ public class UserService {
     public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-    }
-
-    public ResponseDto createUser(CreateDto newUser) {
-        User user = userMapper.toUser(newUser);
-        return userMapper.toResponseDto(userRepository.save(user));
     }
 
     public List<ResponseDto> getAllUsers() {
